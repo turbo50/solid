@@ -10,10 +10,10 @@ Dans un système, les besoins évolues parfois sans cesse. Et pour s'adapter à ces
 
 ## Comment faire?
 
-Une bonne pratique consiste à étendre la classe concernée par les modifications afin de prendre en compte des nouveaux cas. Ainsi on applique la règle de Ouvert en extension et fermée en modification.
+Une bonne pratique consiste à étendre la classe concernée par les modifications afin de prendre en compte des nouveaux cas. Ainsi on applique la règle de *Ouvert* en extension et *Fermée* en modification.
 
-Cas d'usage
-Imaginons ce besoin: Nous voulons dans une classe une méthode responsable des calculs des aires des figures diverses(dont le type n'est pas connu à l'avance par exemple). Nous avons jusqu'ici identifié deux types de figures dont nous aimerions calculer les aires: Cercle et Rectangle. On pourrait donc être tenter d'écrire ceci: 
+*Cas d'usage*
+Imaginons ce besoin: Nous voulons dans une classe une méthode responsable des calculs des aires des figures diverses(dont le type n'est pas connu à l'avance par exemple). Nous avons jusqu'ici identifié deux types de figures dont nous aimerions calculer les aires: Cercle et Rectangle. On pourrait donc être tenté d'écrire ceci: 
 
     public class MauvaisPattern {
 		public double calculAir(Object figure) {
@@ -27,7 +27,8 @@ Comment mettre en œuvre le Open/Closed principle?
 
 # Modèle UML 
 
-![Open-closed.png](https://draftin.com:443/images/80100?token=5vmtM-4Ol--3xl7aj5gna2E1vjAdZ_5odTROIhFW904L_toNL-5UpsUhfbtEiK2mKe1H4HhAY0Arp1FJBp0tKlA) 
+
+![Open-closed.png](https://draftin.com:443/images/80102?token=IxUzLXQA9QdvtNf-XD0yypuvAEDiSGxd93xdwFlqz5FJbAziYTYJVGTW1a0yrejI0-NDYI0lZeAM5hi_8qHXSxA)   
 ## Interface Figure
 
  
@@ -42,17 +43,17 @@ C'est l'interface qui est fermé en modification (closed)
 ## Classe Cercle
 
     public class Cercle implements Figure {
-	private double rayon;
-	
-	public Cercle(double rayon) {
-		super();
-		this.rayon = rayon;
-	}	
-	@Override
-	public double getAir() {
-		return Math.PI * Math.pow(rayon, 2);
+		private double rayon;
+		
+		public Cercle(double rayon) {
+			super();
+			this.rayon = rayon;
+		}	
+		@Override
+		public double getAir() {
+			return Math.PI * Math.pow(rayon, 2);
+		}
 	}
-}
 ## Classe Rectangle
 
     public class Rectangle implements Figure {
@@ -76,5 +77,62 @@ Classe où se font les calculs
 			return maFigure.getAir();
 		}
 	}
-Tous nouvelle figure demandera juste l'implémentation de l'interface **Figure** dans une nouvelle classe. La classe Calcul restera inchangée. Et le code maintenable.
+Tous nouvelle figure demandera juste l'implémentation de l'interface **Figure** dans une nouvelle classe. La classe Calcul restera inchangée. Et le code maintenable. En plus, on est certain que toute occurrence de paramètre de la méthode **calculAir**, aura la méthode **getAir**.
 
+# PRINCIPE SOLID : Dependency inversion
+Le module de haut niveau ne doit pas dépendre du module de bas niveau, mais qu'il doit dépendre d'abstractions.
+
+## Pourquoi?
+Le couplage fort entre deux module n'est pas une bonne pratique, car il induit une dépendance forte entre composant. La modifications d'un composant impose parfois une restructuration du code des autres composants  qui en dépendent. Ceci brise le Dependency inversion principle et Open/Closed principle.
+
+## Comment faire?
+Les classe de bas niveaux implémentent généralement la *Buisness Logic*. Et les classes de hauts niveaux sont bâties au dessus de cette couche.  L'idée consiste à inverser les habitudes, c'est-à-dire rendre la classe de bas niveau dépendante d'abstractions.
+*Cas d'usage*
+Imaginons ce besoin: Nous voulons implémenter quelque part dans une classe de notre projet, une méthode qui serait chargée de faire les paiements en ligne via l'API de PayPal. On serait tenté de procéder comme suit:
+
+    public class PaiementPayPal...
+    public class PaiementManager{
+	    public PaiementManager(PaiementPayPal payPal){}
+	    public void doPaiement(double montant, ...){
+		    payPal.payer(montant, ...);
+	    }
+    }
+    
+Le problème que pose ce pattern est qu'il y'a une forte dépendance entre la classe de haut niveau **PaiementManager**  et celle de bas niveau **PaiementPayPal**. S'il y'a un nouveau mode de paiement en ligne, elle s'avèrera très vite caduque. 
+Comment mettre en œuvre le Dependency inversion principle?
+
+## Modèle UML
+![dependency-inversion.png](https://draftin.com:443/images/80104?token=LSA6cu_yXQxV7EJmveeER-zGJeo8BMK3HB5Ah9-RDuS97ClXgxm-09M393Sz6oMJFXA6UwbWIIUaK7CBriTFjgY) 
+
+## Interface IPaiement
+
+    public interface IPaiement {
+		public void payer(double montant);
+	}
+## Classe PaiementPayPal
+
+    public class PaiementPayPal implements IPaiement {
+		@Override
+		public void payer(double montant) {
+			System.out.println("Paiement par PayPal. Montant = " + montant);
+		}
+	}
+## Classe PaiementMobileMoney
+
+    public class PaiementMobileMoney implements IPaiement {
+		@Override
+		public void payer(double montant) {
+			System.out.println("Paiement par Mobile Money. Montant = " + montant);
+		}
+	}
+
+Classe qui exécute les paiements
+
+    public class PaiementManager {
+		public void doPaiement(IPaiement paiement, double montant) {
+			paiement.payer(montant);
+		}
+	}
+
+*Quel est l'intérêt?*
+Autrefois c'était les classes de haut niveau qui devaient respecter l'implémentation des classes de bas niveau. Or avec ce pattern, ce sont les classes de bas niveau qui doivent respecter les contraintes des classes de haut niveau. Ainsi  avec ce modèle, on peut intégrer d'autres systèmes de paiements en ligne, sans modification du code existant, tout en gardant le code propre.
