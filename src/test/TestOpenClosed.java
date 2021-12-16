@@ -16,31 +16,32 @@ import openclosed.Rectangle;
 
 public class TestOpenClosed {
 
-	private Calcul calcul1, calcul2;
+	private Cercle c;
+	private Rectangle r;
 	
 	@Before
 	public void setUp() {
-		calcul1 = new Calcul(new Cercle(4));
-		calcul2 = new Calcul(new Rectangle(2, 3));
+		c = new Cercle(4);
+		r = new Rectangle(2, 3);
 	}
 	
 	@Test
 	public void test_airCercle_OK() {
-		assertEquals(calcul1.calculAir(), Math.PI * 4 * 4, 0);
+		assertEquals(new Calcul().calculAir(c), Math.PI * 4 * 4, 0);
 	}
 	
 	@Test
 	public void test_airCercle_PasOK() {
-		assertNotEquals(calcul1.calculAir(), Math.PI * 3 * 3, 0);
+		assertNotEquals(new Calcul().calculAir(c), Math.PI * 3 * 3, 0);
 	}
 	
 	@Test
 	public void test_airRectangle_OK() {
-		assertTrue(calcul2.calculAir() == 6);
+		assertTrue(new Calcul().calculAir(r) == 6);
 	}
 	
 	@Test
 	public void test_airRectangle_PasOK() {
-		assertFalse(calcul2.calculAir() == 4);
+		assertFalse(new Calcul().calculAir(r) == 4);
 	}
 }
