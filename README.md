@@ -1,10 +1,10 @@
 # Principe SOLID:
 En POO, SOLID est un acronyme qui regroupe cinq principes de conception destinés à produire des architectures logicielles plus compréhensibles, flexibles et maintenables.
-S : principe de la responsabilité unique
-O : principe ouvert/fermé
-L : principe de substitution de Liskov
-I : principe de ségrégation des interfaces
-D : principe d'inversion des dépendances
+ - S : principe de la responsabilité unique
+ - O : principe ouvert/fermé
+ - L : principe de substitution de Liskov
+ - I : principe de ségrégation des interfaces
+ - D : principe d'inversion des dépendances
 
 ## Pourquoi SOLID?
 
