@@ -121,8 +121,8 @@ Toute nouvelle figure demandera juste l'implémentation de l'interface **Figure*
 Une superclasse doit pouvoir être instanciée par n'importe qu'elle héritière sans que cela ne pose de problème.
 ## Pourquoi?
 
-
-Le principe de substitution de Liskov reprend le principe Open/Closed et l'applique au cas particulier de l'héritage de classes : si une classe enfant est une implémentation valide, alors une classe parent doit également l'être (et vice versa) ;
+Le principe de substitution de Liskov s'attaque au problème des interfaces générique contenant une multitude de contrat qui n'ont pas de lien sémantique entre eux et permet de faire des regroupements par domaines connexes.
+Il reprend le principe Open/Closed et l'applique au cas particulier de l'héritage de classes : si une classe enfant est une implémentation valide, alors une classe parent doit également l'être (et vice versa) ;
 ## Comment faire?
 
 Une bonne pratique consiste à envisager des interfaces de haut niveau avant les implémentations de bas niveau (concrètes).

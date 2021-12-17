@@ -5,4 +5,5 @@ public class Femme implements Personne, Action {
     public void accoucher() {
         System.out.println("J'accouche 9 mois après fécondation");
     }
+
 }
