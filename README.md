@@ -65,7 +65,7 @@ Comment mettre en œuvre le Open/Closed principle?
 # Modèle UML 
 
 
-![Open-closed.png](https://draftin.com:443/images/80102?token=IxUzLXQA9QdvtNf-XD0yypuvAEDiSGxd93xdwFlqz5FJbAziYTYJVGTW1a0yrejI0-NDYI0lZeAM5hi_8qHXSxA)   
+![Open-closed.png](https://draftin.com:443/images/80110?token=oS3rFNuVEXdB1HLMCweYesUb6gHZyR62lueKPvCvhWNrvEp7gVeJCQkh_k1UCI10sY_PgJdmC-chFxNNyAzbtqs)   
 ## Interface Figure
 
  
@@ -129,6 +129,7 @@ Imaginons ce besoin: Nous voulons implémenter quelque part dans une classe de n
 
     public class PaiementPayPal...
     public class PaiementManager{
+    	 private PaiementPayPal payPal;
 	    public PaiementManager(PaiementPayPal payPal){}
 	    public void doPaiement(double montant, ...){
 		    payPal.payer(montant, ...);
@@ -139,7 +140,7 @@ Le problème que pose ce pattern est qu'il y'a une forte dépendance entre la cl
 Comment mettre en œuvre le Dependency inversion principle?
 
 ## Modèle UML
-![dependency-inversion.png](https://draftin.com:443/images/80104?token=LSA6cu_yXQxV7EJmveeER-zGJeo8BMK3HB5Ah9-RDuS97ClXgxm-09M393Sz6oMJFXA6UwbWIIUaK7CBriTFjgY) 
+![dependency-inversion.png](https://draftin.com:443/images/80111?token=NmwzbUa2rrGdiq8JNkB7xV4UTet72A-bm7vZRJg8BW8pRmc6K8yv1XFBpYrWsIzTkcuimPes-S3LHYMJlnTri9Q) 
 
 ## Interface IPaiement
 
