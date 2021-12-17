@@ -232,7 +232,7 @@ Comment mettre en œuvre Interface Segregation principle ?
 # Modèle UML
 
 
-![Diagramme de classe --- Interface S](https://user-images.githubusercontent.com/39199107/146549563-98ff9428-e1a5-4611-92d2-eefae7c91fde.PNG)
+![Diagramme de classe --- Interface S](https://user-images.githubusercontent.com/39199107/146551652-f8fc6b83-cb64-49f2-8d55-06017ab18f45.PNG)
 ## Interface Personne
 
 
