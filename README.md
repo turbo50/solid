@@ -191,6 +191,84 @@ La superclasse Personne ne conserve que les propriétés et méthodes communes �
     }
 Avec ce modèle la classe Personne peut être instanciée par l'ensemble de ses héritières sans que cela ne cause de problème. Le principe de Liskov Substitution est bien respecté.
 
+# PRINCIPE SOLID : Interface Segregation
+
+Une classe qui implemente une interface ou une intefarce qui en étend une autre doit nécessiter tous les contrats de cette interface. En d'autre terme toutes les méthodes d'une interface doivent être utile à la classe qui l'implémente ou l'interface qui l'étend
+## Pourquoi?
+
+
+Le principe de segregation des interface reprend le principe Open/Closed et l'applique au cas particulier de l'héritage de classes : si une classe enfant est une implémentation valide, alors une classe parent doit également l'être (et vice versa) ;
+## Comment faire?
+
+Une bonne pratique consiste à envisager des interfaces de haut niveau avant les implémentations de bas niveau (concrètes).
+*Cas d'usage*
+Nous avons une classe Personne et des classe héritières Homme et Femme. On pourrait être tenté de faire ceci:
+
+    public interface Personne {
+        public default void dormir(){
+            System.out.println("Je dors pour me reposer");
+        ;
+        public void accoucher(){
+            System.out.println("Je prend 9 mois pour accoucher");
+	}
+
+    public class Homme implements Personne{
+        @Override
+        public void accoucher(){
+            //Ne rien faire
+        }
+    }
+
+    public class Femme implements Personne{
+        @Override
+        public void accoucher(){
+            System.out.println("J'accouche 9 mois après fécondation");
+        }
+    }
+
+Le problème ici est qu'un Homme n'accouche pas. La classe homme n'aura donc pas d'implémentation possible de la méthode accoucher() qu'elle se doit d'implémenter et cela constitue une violation du principe de segrégation des interfaces qui stipule que toute classe doit nécessairement implémenter toutes les méthodes abstraites reçues d'une interface **MauvaisPattern**.
+Comment mettre en œuvre Interface Segregation principle ?
+
+# Modèle UML
+
+
+![Diagramme de classe --- Interface S](https://user-images.githubusercontent.com/39199107/146549563-98ff9428-e1a5-4611-92d2-eefae7c91fde.PNG)
+## Interface Personne
+
+
+L'interface Personne ne conserve que les méthodes communes à toutes les classes qui l'implémente
+
+    package interfacesegregation;
+    public interface Personne {
+        public default void dormir(){
+            System.out.println("Je dors pour me reposer");
+	    }
+    }
+
+
+## Classe Homme
+
+    public class Homme implements Personne{
+        
+    }
+## Classe Femme
+
+    public class Femme implements Personne, Action{
+        @Override
+        public void accoucher(){
+            System.out.println("J'accouche 9 mois après fécondation");
+        }
+    }
+
+
+## Interface Action
+
+    Public interface Action{
+        public void accoucher();
+    }
+Avec ce modèle les classes Homme et Femme implémente l'ensemble des méthodes des interface qu'elles implémentent.
+L'interface Personne à été remplacé par deux interface de manière à respecter le principe.
+
 # PRINCIPE SOLID : Dependency inversion
 Le module de haut niveau ne doit pas dépendre directement du module de bas niveau, mais doit dépendre d'abstractions.
 
