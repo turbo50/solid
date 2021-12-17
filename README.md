@@ -121,7 +121,7 @@ Toute nouvelle figure demandera juste l'implémentation de l'interface **Figure*
 Une superclasse doit pouvoir être instanciée par n'importe qu'elle héritière sans que cela ne pose de problème.
 ## Pourquoi?
 
-Le principe de substitution de Liskov s'attaque au problème des interfaces générique contenant une multitude de contrat qui n'ont pas de lien sémantique entre eux et permet de faire des regroupements par domaines connexes.
+Le principe de substitution de Liskov s'attaque au problème des superclasses trop génériques contenant de multitudes méthodes non communes au héritières. Il permet ainsi l'interchangement entre classes et sous-classes.
 Il reprend le principe Open/Closed et l'applique au cas particulier de l'héritage de classes : si une classe enfant est une implémentation valide, alors une classe parent doit également l'être (et vice versa) ;
 ## Comment faire?
 
@@ -196,8 +196,8 @@ Avec ce modèle la classe Personne peut être instanciée par l'ensemble de ses 
 Une classe qui implemente une interface ou une intefarce qui en étend une autre doit nécessiter tous les contrats de cette interface. En d'autre terme toutes les méthodes d'une interface doivent être utile à la classe qui l'implémente ou l'interface qui l'étend
 ## Pourquoi?
 
-
-Le principe de segregation des interface reprend le principe Open/Closed et l'applique au cas particulier de l'héritage de classes : si une classe enfant est une implémentation valide, alors une classe parent doit également l'être (et vice versa) ;
+Le principe de segregation des interfaces s'attaque au problème des interfaces générique contenant une multitude de contrat qui n'ont pas de lien sémantique entre eux et permet de faire des regroupements par domaines connexes.
+Il reprend le principe Open/Closed et l'applique au cas particulier de l'héritage de classes : si une classe enfant est une implémentation valide, alors une classe parent doit également l'être (et vice versa) ;
 ## Comment faire?
 
 Une bonne pratique consiste à envisager des interfaces de haut niveau avant les implémentations de bas niveau (concrètes).
