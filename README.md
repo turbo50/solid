@@ -34,7 +34,7 @@ Le schéma ci-dessus montre que le principe n'a pas été respecté  et pour app
 
 ![cycle_srp drawio (2)](https://user-images.githubusercontent.com/7405676/146515909-6c1ab682-f225-43aa-9b31-fd4c7db1d75a.png)
 
-On a divisé notre initiale qui avait deux responsabilités en deux classes, chacune ayant sa propre responsabilité.
+On a divisé notre classe initiale qui avait deux responsabilités en deux classes, chacune ayant sa propre responsabilité.
 
 # PRINCIPE SOLID : Open/Closed
 
