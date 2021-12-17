@@ -65,7 +65,7 @@ Comment mettre en œuvre le Open/Closed principle?
 # Modèle UML 
 
 
-![Open-closed.png](https://draftin.com:443/images/80110?token=oS3rFNuVEXdB1HLMCweYesUb6gHZyR62lueKPvCvhWNrvEp7gVeJCQkh_k1UCI10sY_PgJdmC-chFxNNyAzbtqs)   
+![Open-closed.png](https://draftin.com:443/images/80113?token=Vtwyeq_hwUzfxvDMzTrgRZBfQSZiN_0nlkWhkAg_Jdv_7YhIvr-2RKkwTpxNVwJIz7ccjZEpZ6Khp2oyGtOIm9Q)    
 ## Interface Figure
 
  
@@ -114,33 +114,36 @@ Classe où se font les calculs
 			return maFigure.getAir();
 		}
 	}
-Tous nouvelle figure demandera juste l'implémentation de l'interface **Figure** dans une nouvelle classe. La classe Calcul restera inchangée. Et le code maintenable. En plus, on est certain que toute occurrence de paramètre de la méthode **calculAir**, aura la méthode **getAir**.
+Toute nouvelle figure demandera juste l'implémentation de l'interface **Figure** dans une nouvelle classe. La classe Calcul restera inchangée. Et le code maintenable. En plus, on est certain que toute occurrence de paramètre de la méthode **calculAir**, aura la méthode **getAir**.
 
 # PRINCIPE SOLID : Dependency inversion
-Le module de haut niveau ne doit pas dépendre du module de bas niveau, mais qu'il doit dépendre d'abstractions.
+Le module de haut niveau ne doit pas dépendre directement du module de bas niveau, mais doit dépendre d'abstractions.
 
 ## Pourquoi?
-Le couplage fort entre deux module n'est pas une bonne pratique, car il induit une dépendance forte entre composant. La modifications d'un composant impose parfois une restructuration du code des autres composants  qui en dépendent. Ceci brise le Dependency inversion principle et Open/Closed principle.
+Le couplage fort entre deux modules n'est pas une bonne pratique, car il induit une dépendance forte entre composant. La modifications d'un composant impose parfois une restructuration du code des autres composants  qui en dépendent. Ceci brise le Dependency inversion principle et Open/Closed principle.
 
 ## Comment faire?
-Les classe de bas niveaux implémentent généralement la *Buisness Logic*. Et les classes de hauts niveaux sont bâties au dessus de cette couche.  L'idée consiste à inverser les habitudes, c'est-à-dire rendre la classe de bas niveau dépendante d'abstractions.
+Les classes de bas niveau implémentent généralement la *Buisness Logic*. Et les classes de haut niveau sont bâties au dessus de cette couche.  L'idée consiste à inverser les habitudes, c'est-à-dire rendre la classe de bas niveau dépendante d'abstractions.
 *Cas d'usage*
 Imaginons ce besoin: Nous voulons implémenter quelque part dans une classe de notre projet, une méthode qui serait chargée de faire les paiements en ligne via l'API de PayPal. On serait tenté de procéder comme suit:
 
-    public class PaiementPayPal...
+    public class PayPal{
+    	...
+    	public void payer(double montant){}
+    }
     public class PaiementManager{
-    	 private PaiementPayPal payPal;
-	    public PaiementManager(PaiementPayPal payPal){}
-	    public void doPaiement(double montant, ...){
-		    payPal.payer(montant, ...);
+        private PayPal payPal;
+	    public PaiementManager(PayPal payPal){}
+	    public void doPaiement(double montant){
+		    payPal.payer(montant);
 	    }
     }
     
-Le problème que pose ce pattern est qu'il y'a une forte dépendance entre la classe de haut niveau **PaiementManager**  et celle de bas niveau **PaiementPayPal**. S'il y'a un nouveau mode de paiement en ligne, elle s'avèrera très vite caduque. 
+Le problème que pose ce pattern est qu'il y'a une forte dépendance entre la classe de haut niveau **PaiementManager**  et celle de bas niveau **PaiementPayPal**. S'il faut prendre en compte un nouveau mode de paiement en ligne, elle s'avèrera très vite inutilisable. 
 Comment mettre en œuvre le Dependency inversion principle?
 
 ## Modèle UML
-![dependency-inversion.png](https://draftin.com:443/images/80111?token=NmwzbUa2rrGdiq8JNkB7xV4UTet72A-bm7vZRJg8BW8pRmc6K8yv1XFBpYrWsIzTkcuimPes-S3LHYMJlnTri9Q) 
+![dependency-inversion.png](https://draftin.com:443/images/80112?token=DDZnx3U744MEG-XGM6_9g49pbONZsQBJFAH4EYdUQQIbyyQJXCT8gJI-2gcQLWAVPABm2dogFPL_MxyKiBpxAlo) 
 
 ## Interface IPaiement
 
@@ -173,4 +176,4 @@ Classe qui exécute les paiements
 	}
 
 *Quel est l'intérêt?*
-Autrefois c'était les classes de haut niveau qui devaient respecter l'implémentation des classes de bas niveau. Or avec ce pattern, ce sont les classes de bas niveau qui doivent respecter les contraintes des classes de haut niveau. Ainsi  avec ce modèle, on peut intégrer d'autres systèmes de paiements en ligne, sans modification du code existant, tout en gardant le code propre.
+Autrefois c'étaient les classes de haut niveau qui devaient respecter l'implémentation des classes de bas niveau. Or avec ce pattern, ce sont les classes de bas niveau qui doivent respecter les contraintes des classes de haut niveau. Ainsi  avec ce modèle, on peut intégrer d'autres systèmes de paiements en ligne, sans modification du code existant, tout en gardant le code propre.
