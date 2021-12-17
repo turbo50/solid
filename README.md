@@ -116,6 +116,81 @@ Classe où se font les calculs
 	}
 Toute nouvelle figure demandera juste l'implémentation de l'interface **Figure** dans une nouvelle classe. La classe Calcul restera inchangée. Et le code maintenable. En plus, on est certain que toute occurrence de paramètre de la méthode **calculAir**, aura la méthode **getAir**.
 
+# PRINCIPE SOLID : Liskov Substitution
+
+Une superclasse doit pouvoir être instanciée par n'importe qu'elle héritière sans que cela ne pose de problème.
+## Pourquoi?
+
+
+Le principe de substitution de Liskov reprend le principe Open/Closed et l'applique au cas particulier de l'héritage de classes : si une classe enfant est une implémentation valide, alors une classe parent doit également l'être (et vice versa) ;
+## Comment faire?
+
+Une bonne pratique consiste à envisager des interfaces de haut niveau avant les implémentations de bas niveau (concrètes).
+*Cas d'usage*
+Nous avons une classe Personne et des classe héritières Homme et Femme. On pourrait être tenté de faire ceci:
+
+    public class Personne {
+	    private String nom;
+        private String prenom;
+        private LocalDate dateNaissance;
+        public void dormir(){
+            System.out.println("Je dors pour me reposer");
+        ;
+        public void accoucher(){
+            System.out.println("Je prend 9 mois pour accoucher");
+	}
+
+    public class Homme extends Personne{
+    }
+
+    public class Femme extends Personne{
+    }
+
+Le problème ici est qu'un Homme n'accouche pas. Une Personne ne peut donc pas être substituée par un Homme et cela constitue une violation du principe "Liskov Substitution principle"  **MauvaisPattern**.
+Comment mettre en œuvre Liskov Substitution principle ?
+
+# Modèle UML
+
+
+![Diagramme de classe --- Liskov](https://user-images.githubusercontent.com/39199107/146538667-73e8326f-f6b8-4de9-a2ba-607a98ecc123.PNG)
+## Superclasse Personne
+
+
+La superclasse Personne ne conserve que les propriétés et méthodes communes à toutes les héritières
+
+    package liskovsubstitution;
+    public class Personne {
+	    private String nom;
+        private String prenom;
+        private LocalDate dateNaissance;
+        public void dormir(){
+            System.out.println("Je dors pour me reposer");
+        ;
+	    }
+    }
+
+
+## Classe Homme
+
+    public class Homme extends Personne{
+    }
+## Classe Femme
+
+    public class Femme extends Personne implements Action{
+        @Override
+        public void accoucher(){
+            System.out.println("J'accouche 9 mois après fécondation");
+        }
+    }
+
+
+## Interface Action
+
+    Public interface Action{
+        public void accoucher();
+    }
+Avec ce modèle la classe Personne peut être instanciée par l'ensemble de ses héritières sans que cela ne cause de problème. Le principe de Liskov Substitution est bien respecté.
+
 # PRINCIPE SOLID : Dependency inversion
 Le module de haut niveau ne doit pas dépendre directement du module de bas niveau, mais doit dépendre d'abstractions.
 
