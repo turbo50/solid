@@ -28,6 +28,13 @@ Une classe ne doit avoir qu'une seule responsabilité et donc qu'une seule raiso
 
 ## Comment faire ?
 
+![cycle_srp drawio (1)](https://user-images.githubusercontent.com/7405676/146512910-47100578-5e84-4424-8312-0eab441db767.png)
+
+Le schéma ci-dessus montre que le principe n'a pas été respecté  et pour appliqué les bonnes pratiques et respecter le principe SOLID et plus précisement le S (responsabilité unique), notre class doit avoir qu'une seule respnsabilité (voir schéma ci-dessous).
+
+![cycle_srp drawio (2)](https://user-images.githubusercontent.com/7405676/146515909-6c1ab682-f225-43aa-9b31-fd4c7db1d75a.png)
+
+On a divisé notre initiale qui avait deux responsabilités en deux classes, chacune ayant sa propre responsabilité.
 
 # PRINCIPE SOLID : Open/Closed
 
